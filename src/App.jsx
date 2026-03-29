@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { siteMedia } from './siteMedia'
 
+const withBase = (path = '') => `${import.meta.env.BASE_URL}${path}`.replace(/([^:]\/)\/+/g, '$1')
+
 const officialTopItems = ['الرئيسية', 'الوزارة', 'المعرفة', 'التعليم', 'المركز الإعلامي', 'تواصل معنا', 'المشاركة الإلكترونية']
 
 const officialMenus = {
@@ -18,8 +20,8 @@ const officialMenus = {
     {
       heading: 'قطاعات الوزارة',
       items: [
-        { label: 'معالي الوزير', href: './minister.html' },
-        { label: 'القيادات', href: './leaders.html' },
+        { label: 'معالي الوزير', href: withBase('minister.html') },
+        { label: 'القيادات', href: withBase('leaders.html') },
         { label: 'الوكالات والإدارات', href: 'https://moe.gov.sa/ar/aboutus/sectors/Pages/departments.aspx', external: true },
         { label: 'المراكز', href: 'https://moe.gov.sa/ar/aboutus/sectors/Pages/centersandunits.aspx', external: true },
       ],
@@ -32,7 +34,7 @@ const officialMenus = {
         { label: 'جد طريقك', href: 'https://moe.gov.sa/ar/aboutus/Portal/Pages/FindYourWay.aspx', external: true },
         { label: 'مساعدة ذوي الإعاقة', href: 'https://moe.gov.sa/ar/aboutus/Portal/Pages/SpecialNeeds.aspx', external: true },
         { label: 'الأسئلة المتكررة', href: 'https://moe.gov.sa/ar/aboutus/Portal/Pages/FAQs.aspx', external: true },
-        { label: 'الموارد البشرية', href: './human-resources.html' },
+        { label: 'الموارد البشرية', href: withBase('human-resources.html') },
         { label: 'سياسة حق الحصول على المعلومة', href: 'https://moe.gov.sa/ar/aboutus/Portal/Pages/DataSharingRegulations.aspx', external: true },
       ],
     },
@@ -294,7 +296,7 @@ const newsItems = [
     title: 'طلبة التعليم العام يحققون عدداً من الجوائز الكبرى والميداليات الذهبية في معرض جنيف الدولي للاختراعات 2026',
     category: 'طلبة التعليم العام',
     date: '1447-09-25',
-    href: './news.html#geneva-awards-2026',
+    href: withBase('news.html#geneva-awards-2026'),
     external: false,
   },
   {
@@ -302,7 +304,7 @@ const newsItems = [
     title: 'منظومة التعليم والتدريب تشارك في معرض جنيف الدولي للاختراعات بـ135 ابتكاراً',
     category: 'ابتكار وبحث',
     date: '1447-09-23',
-    href: './news.html#geneva-innovations-135',
+    href: withBase('news.html#geneva-innovations-135'),
     external: false,
   },
   {
@@ -310,7 +312,7 @@ const newsItems = [
     title: 'في ذكرى يوم التأسيس.. وزير التعليم: منظومة التعليم تشهد نقلة نوعية في ظل قيادة تواصل مسيرة البناء والتنمية',
     category: 'تصريحات الوزير',
     date: '1447-09-05',
-    href: './news.html#foundation-day-statement',
+    href: withBase('news.html#foundation-day-statement'),
     external: false,
   },
 ]
@@ -366,14 +368,14 @@ const priorityActions = [
   {
     title: 'خدمات الموظفين والمعلمين',
     description: 'الانتقال إلى فارس والموارد البشرية والخدمات التشغيلية المرتبطة بالمنسوبين.',
-    href: './human-resources.html',
+    href: withBase('human-resources.html'),
     tag: 'لمنسوبي الوزارة',
     external: false,
   },
   {
     title: 'الأخبار والإعلانات',
     description: 'متابعة أخبار الوزارة والإعلانات والفعاليات من صفحة مخصصة وواضحة.',
-    href: './news.html',
+    href: withBase('news.html'),
     tag: 'محدث يوميًا',
     external: false,
   },
@@ -396,13 +398,13 @@ const assistantSuggestions = [
   {
     label: 'أريد خدمات الموظفين',
     answer: 'اذهب إلى صفحة الموارد البشرية للوصول إلى فارس والخدمات التشغيلية المرتبطة بمنسوبي الوزارة.',
-    href: '/human-resources.html',
+    href: withBase('human-resources.html'),
     external: false,
   },
   {
     label: 'أين أخبار الوزارة؟',
     answer: 'تم تخصيص صفحة أخبار أوضح تعرض أحدث أخبار الوزارة مع روابطها الرسمية مباشرة.',
-    href: '/news.html',
+    href: withBase('news.html'),
     external: false,
   },
   {
@@ -434,7 +436,7 @@ function getAssistantReply(question) {
   if (normalized.includes('فارس') || normalized.includes('موظف') || normalized.includes('معلم') || normalized.includes('منسوب') || normalized.includes('موارد بشرية')) {
     return {
       text: 'لخدمات الموظفين والمعلمين، انتقل إلى صفحة الموارد البشرية أو مباشرة إلى نظام فارس.',
-      href: './human-resources.html',
+      href: withBase('human-resources.html'),
       action: 'الذهاب إلى الموارد البشرية',
       external: false,
     }
@@ -443,7 +445,7 @@ function getAssistantReply(question) {
   if (normalized.includes('خبر') || normalized.includes('اخبار') || normalized.includes('إعلان') || normalized.includes('اعلان') || normalized.includes('فعالية')) {
     return {
       text: 'صفحة الأخبار المخصصة تعرض أخبار الوزارة والإعلانات والفعاليات بشكل أوضح.',
-      href: './news.html',
+      href: withBase('news.html'),
       action: 'فتح صفحة الأخبار',
       external: false,
     }
@@ -563,7 +565,7 @@ function NewsTicker({ items }) {
             </div>
             <p className="text-xs font-medium tracking-[0.14em] text-[var(--moe-blue)]">آخر مستجدات الوزارة</p>
             <a
-              href="./news.html"
+              href={withBase('news.html')}
               className="hidden rounded-full border border-[rgba(21,68,90,0.10)] bg-white/80 px-3 py-1.5 text-xs font-medium text-[var(--moe-navy)] transition hover:border-[var(--moe-green)] hover:text-[var(--moe-green)] sm:inline-flex"
             >
               جميع الأخبار
@@ -740,7 +742,7 @@ export default function App() {
           <div className="flex flex-col gap-4 py-4 lg:py-5">
             <div className="flex items-center justify-between gap-6 border-b border-[rgba(21,68,90,0.08)] pb-4 text-sm text-[var(--moe-slate)]">
               <div className="hidden items-center gap-1 lg:flex">
-                <a href="./" className="rounded-full bg-[rgba(7,168,105,0.10)] px-3 py-1.5 font-medium text-[var(--moe-green)] transition">
+                <a href={withBase('')} className="rounded-full bg-[rgba(7,168,105,0.10)] px-3 py-1.5 font-medium text-[var(--moe-green)] transition">
                   الرئيسية
                 </a>
                 {officialTopItems.slice(1).map((item) => (
@@ -773,7 +775,7 @@ export default function App() {
 
             <div className="-mx-4 overflow-x-auto px-4 lg:hidden">
               <div className="flex min-w-max items-center gap-2 pb-1">
-                <a href="./" className="rounded-full border border-[rgba(7,168,105,0.22)] bg-[rgba(7,168,105,0.10)] px-3 py-2 text-sm text-[var(--moe-green)]">
+                <a href={withBase('')} className="rounded-full border border-[rgba(7,168,105,0.22)] bg-[rgba(7,168,105,0.10)] px-3 py-2 text-sm text-[var(--moe-green)]">
                   الرئيسية
                 </a>
                 {officialTopItems.slice(1).map((item) => (
@@ -965,7 +967,7 @@ export default function App() {
                   <p className="text-sm font-medium text-[var(--moe-blue)]">أخبار الوزارة</p>
                   <h3 className="mt-2 text-2xl font-bold text-[var(--moe-navy)]">آخر الأخبار</h3>
                 </div>
-                <a href="./news.html" className="text-sm text-[var(--moe-green)]">
+                <a href={withBase('news.html')} className="text-sm text-[var(--moe-green)]">
                   المزيد
                 </a>
               </div>
